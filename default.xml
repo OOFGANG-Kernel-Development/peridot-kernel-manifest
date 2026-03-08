@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Repo manifest for Xiaomi peridot (SM8650 / Snapdragon 8 Gen 3) kernel.
-  Android 14, kernel 6.1 GKI, Kleaf (Bazel) build system.
-
-  Usage:
-    repo init -u https://github.com/ApexLegend007/peridot-kernel-manifest -b main
-    repo sync -c --no-tags -j$(nproc)
-    ./build.sh
--->
 <manifest>
   <!-- ApexLegend007: all peridot kernel repos -->
   <remote fetch="https://github.com/ApexLegend007" name="apex"/>
