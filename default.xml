@@ -93,7 +93,17 @@
            clone-depth="1"/>
 
   <!--
-    The following are NOT managed by repo — set up by build.sh:
+    Vendor out-of-tree kernel modules:
+    audio, bt, camera, display, graphics, IPA, rmnet, securemsm,
+    wlan (cnss2/icnss2/qcacld-3.0), touch, video, eva, synx, spu, mm-drivers, etc.
+  -->
+  <project name="kernel_xiaomi_sm8650-modules"
+           path="vendor"
+           revision="main"
+           clone-depth="1"/>
+
+  <!--
+    NOT managed by repo (set up automatically by build.sh):
       prebuilts/clang/host/linux-x86/clang-r487747c  (downloaded from AOSP)
       tools/bazel                                     (Bazelisk binary)
   -->
