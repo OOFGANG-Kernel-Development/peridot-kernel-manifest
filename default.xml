@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Repo manifest for Xiaomi peridot (SM8650 / Snapdragon 8 Gen 3) kernel.
+  Android 14 GKI, kernel 6.1, Kleaf (Bazel) build system.
+
+  Usage:
+    repo init -u https://github.com/ApexLegend007/peridot-kernel-manifest -b main
+    repo sync -c --no-tags -j$(nproc)
+    ./build.sh --skip-clone
+-->
+<manifest>
+  <!-- All peridot kernel repos hosted on ApexLegend007 -->
+  <remote fetch="https://github.com/ApexLegend007" name="apex" review=""/>
+  <!-- AOSP for mkbootimg -->
+  <remote fetch="https://android.googlesource.com" name="aosp"/>
+
+  <default remote="apex" sync-c="true" sync-tags="false" revision="main"/>
+
+  <!--
+    Root workspace repo.
+    Contains: build.sh, .bazelrc, MODULE.bazel, BUILD.bazel,
+              bootable/bootloader/edk2/BUILD.bazel (ABL stub),
+              prebuilts/build-tools/linux-x86/bin/toybox (hermetic stub),
+              README.md, peridot.xml
+  -->
+  <project name="sm8650-peridot-kernel"
+           path="."
+           revision="main"/>
+
+  <!-- Kernel source (forked from MiCode/Xiaomi_Kernel_OpenSource) -->
+  <project name="peridot-msm-kernel"
+           path="msm-kernel"
+           revision="peridot-u-oss"
+           clone-depth="1"/>
+
+  <!-- Device tree (forked from MiCode/kernel_devicetree) -->
+  <project name="peridot-kernel-devicetree"
+           path="msm-kernel/arch/arm64/boot/dts/vendor"
+           revision="peridot-u-oss"
+           clone-depth="1"/>
+
+  <!-- Kleaf build framework (build/kernel/kleaf + hermetic tools) -->
+  <project name="peridot-kernel-build"
+           path="build/kernel"
+           revision="peridot-u-oss"
+           clone-depth="1"/>
+
+  <!-- Bazel common rules (pkg_files, dist_dir, etc.) -->
+  <project name="peridot-bazel-common-rules"
+           path="build/bazel_common_rules"
+           revision="android14-release"
+           clone-depth="1"/>
+
+  <!-- DTC: device-tree compiler, built from source by Bazel -->
+  <project name="peridot-external-dtc"
+           path="external/dtc"
+           revision="master"
+           clone-depth="1"/>
+
+  <!-- Bazel Skylib: Starlark standard library required by Kleaf -->
+  <project name="peridot-external-bazel-skylib"
+           path="external/bazel-skylib"
+           revision="master"
+           clone-depth="1"/>
+
+  <!-- abseil-py: Python Abseil library used by Kleaf tooling -->
+  <project name="peridot-external-absl-py"
+           path="external/python/absl-py"
+           revision="master"
+           clone-depth="1"/>
+
+  <!-- Stardoc: Bazel documentation tool (required by workspace.bzl) -->
+  <project name="peridot-external-stardoc"
+           path="external/stardoc"
+           revision="main"
+           clone-depth="1"/>
+
+  <!-- Prebuilt kernel build tools (avbtool, mkdtimg, depmod, dtc, etc.) -->
+  <project name="peridot-kernel-prebuilts-build-tools"
+           path="prebuilts/kernel-build-tools"
+           revision="main"
+           clone-depth="1"/>
+
+  <!-- mkbootimg: creates boot.img / vendor_boot.img -->
+  <project remote="aosp"
+           name="platform/system/tools/mkbootimg"
+           path="tools/mkbootimg"
+           revision="refs/heads/android14-release"
+           clone-depth="1"/>
+
+  <!--
+    NOT managed by repo (set up automatically by build.sh):
+      prebuilts/clang/host/linux-x86/clang-r487747c  — downloaded from AOSP
+      tools/bazel                                     — Bazelisk binary
+      kernel/xiaomi/sm8650                            — vendor modules
+  -->
+</manifest>
