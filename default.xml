@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <!-- ApexLegend007: all peridot kernel repos -->
-  <remote fetch="https://github.com/ApexLegend007" name="apex"/>
+  <remote fetch="https://github.com/OOFGANG-Kernel-Development" name="apex"/>
   <!-- AOSP: tools/mkbootimg -->
   <remote fetch="https://android.googlesource.com" name="aosp"/>
 
